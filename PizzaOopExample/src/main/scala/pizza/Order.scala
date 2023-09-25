@@ -1,24 +1,25 @@
 package pizza
 
-import scala.collection.mutable.ArrayBuffer
-
-class Order (
-    val pizzas: ArrayBuffer[Pizza],
-    var customer: Customer
+case class Order (
+    val pizzas: List[Pizza],
+    val customer: Customer
 ) {
 
-    def addPizza(p: Pizza): Unit = {
-        pizzas += p
+    def addPizza(p: Pizza): Order = {
+        copy(pizzas = p +: pizzas)
     }
 
-    def removePizza(p: Pizza): Unit = {
-        pizzas -= p
+    def removePizza(p: Pizza): Order = {
+        copy(pizzas = pizzas.filter(_ != p))
     }
 
     // need to implement these
-    def getBasePrice(): Int = ???
-    def getTaxes(): Int = ???
-    def getTotalPrice(): Int = ???
+    def getBasePrice(): Int = { 
+        pizzas.map(_.getPrice(toppingsPrices = PriceList.toppingPrice , crustSizePrices = PriceList.crustSizePrice ,
+     crustTypePrices = PriceList.crustTypePrice )).reduce(_ + _)
+    }
+    def getTaxes(): Double = getBasePrice() * 0.07
+    def getTotalPrice(): Double = getBasePrice() + getTaxes()
 
     def printOrder(): Unit = {
         for (p <- pizzas) {

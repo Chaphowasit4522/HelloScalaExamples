@@ -17,3 +17,9 @@ case object RegularCrustType extends CrustType
 case object ThinCrustType extends CrustType
 case object ThickCrustType extends CrustType
 
+object PriceList {
+    val toppingPrice : Map[Topping , Int] = Map( Cheese -> 1 , Pepperoni -> 2 , Sausage -> 3 , Mushrooms -> 4 ,
+    Onions -> 5)
+    val crustSizePrice : Map[CrustSize , Int] = Map(SmallCrustSize -> 1 , MediumCrustSize -> 2 , LargeCrustSize -> 3)
+    val crustTypePrice : Map[CrustType , Int] = Map(RegularCrustType -> 1 ,ThinCrustType -> 2,ThickCrustType -> 3)
+}
